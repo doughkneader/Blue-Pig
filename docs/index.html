@@ -1,1 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blue Pig Diner - Your Home Away From Home | Gorham, Maine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d69e2e;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d69e2e;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d69e2e;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(214, 158, 46, 0.1) 0%, rgba(237, 242, 247, 0.8) 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(214,158,46,0.1)"/></svg>') repeat;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero-tagline {
+            font-size: 1.3rem;
+            color: #718096;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: rgba(214, 158, 46, 0.9);
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(214, 158, 46, 0.3);
+        }
+
+        .btn:hover {
+            background: rgba(214, 158, 46, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(214, 158, 46, 0.4);
+        }
+
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #d69e2e;
+            border: 1px solid rgba(214, 158, 46, 0.3);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 1);
+            color: #b7791f;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #e74c3c;
+        }
+
+        /* About Section */
+        .about {
+            background: #fff;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #d4a574 0%, #8b6f47 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Menu Section */
+        .menu {
+            background: #f8f9fa;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item-image {
+            height: 200px;
+            position: relative;
+        }
+
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+
+        .menu-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .menu-item p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .menu-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 1rem;
+        }
+
+        /* Hours & Location */
+        .hours-location {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+        }
+
+        .hours-location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .hours-box, .location-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .hours-box:hover, .location-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .hours-box h3, .location-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(214, 158, 46, 0.1);
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .day {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .closed {
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        .contact-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.75rem;
+            color: #4a5568;
+        }
+
+        .contact-info strong {
+            color: #d69e2e;
+            font-weight: 600;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: rgba(45, 55, 72, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+        }
+
+        .testimonials .section-title {
+            color: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #f6e05e;
+        }
+
+        .rating {
+            color: #f6e05e;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(74, 85, 104, 0.95);
+            backdrop-filter: blur(20px);
+            color: #e2e8f0;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #f6e05e;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #cbd5e0;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #cbd5e0;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            color: #f6e05e;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0aec0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content,
+            .hours-location-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">🐷 The Blue Pig Diner</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#hours">Hours & Location</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>The Blue Pig Diner</h1>
+                <p class="hero-tagline">Your Home Away From Home in Gorham, Maine</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn">View Menu</a>
+                    <a href="tel:2078399744" class="btn secondary">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">About The Blue Pig Diner</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Welcome to The Blue Pig Diner, where delicious homemade food meets warm community spirit in the heart of Gorham, Maine. Owned by Paul and Brianna Kennedy, our diner has been serving up fresh, hearty meals with generous portions and a touch of Southwest cuisine since we opened our doors.</p>
+                    
+                    <p>What makes us special isn't just our mouthwatering dishes – it's our commitment to creating a welcoming, family-friendly atmosphere where locals gather to enjoy great meals and conversation. From our famous corned beef hash to our creatively crafted Benedicts, every dish is prepared with traditional recipes and local ingredients.</p>
+                    
+                    <p>Come experience why we've earned a 4.9-star rating from over 500 reviews. Whether you're joining us for our extensive brunch menu, enjoying our great cocktails and coffee, or simply seeking that cozy diner atmosphere, we're here to make every visit memorable.</p>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        📸 Interior Photo<br>
+                        (Cozy dining room atmosphere)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Highlights -->
+    <section id="menu" class="section menu">
+        <div class="container">
+            <h2 class="section-title">Menu Highlights</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        <div class="image-placeholder">
+                            📸 Corned Beef Hash<br>
+                            (Signature dish photo)
+                        </div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Mouthwatering Corned Beef Hash</h3>
+                        <p>Our signature dish featuring tender, slow-cooked corned beef with perfectly seasoned potatoes, served with two eggs any style and toast. A customer favorite that keeps people coming back!</p>
+                        <div class="menu-price">Market Price</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        <div class="image-placeholder">
+                            📸 Benedict Creation<br>
+                            (Creative Benedict dish)
+                        </div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Creatively Crafted Benedicts</h3>
+                        <p>Our chefs put their own spin on the classic Benedict with fresh ingredients and homemade hollandaise sauce. Each creation is a work of art that tastes as good as it looks.</p>
+                        <div class="menu-price">Market Price</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        <div class="image-placeholder">
+                            📸 Chicken & Waffles<br>
+                            (Southern-style dish)
+                        </div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Southern-Style Chicken & Waffles</h3>
+                        <p>Crispy fried chicken served atop our fluffy, made-from-scratch waffles with a touch of Southwest flair. The perfect combination of sweet and savory that defines comfort food.</p>
+                        <div class="menu-price">Market Price</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        <div class="image-placeholder">
+                            📸 Signature Cocktails<br>
+                            (Beautifully presented drinks)
+                        </div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Great Cocktails & Coffee</h3>
+                        <p>Start your morning with our excellent coffee or unwind with our signature cocktails. Our full bar offers beer, wine, spirits, and expertly crafted drinks to complement any meal.</p>
+                        <div class="menu-price">Full Bar Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours & Location -->
+    <section id="hours" class="section hours-location">
+        <div class="container">
+            <h2 class="section-title">Hours & Location</h2>
+            <div class="hours-location-grid">
+                <div class="hours-box">
+                    <h3>⏰ Operating Hours</h3>
+                    <ul class="hours-list">
+                        <li><span class="day">Monday</span> <span>7:00 AM - 1:00 PM</span></li>
+                        <li><span class="day">Tuesday</span> <span class="closed">Closed</span></li>
+                        <li><span class="day">Wednesday</span> <span>7:00 AM - 1:00 PM</span></li>
+                        <li><span class="day">Thursday</span> <span class="closed">Closed</span></li>
+                        <li><span class="day">Friday</span> <span>7:00 AM - 1:00 PM</span></li>
+                        <li><span class="day">Saturday</span> <span>7:00 AM - 1:00 PM</span></li>
+                        <li><span class="day">Sunday</span> <span>7:00 AM - 1:00 PM</span></li>
+                    </ul>
+                    <p style="margin-top: 1rem; color: #e74c3c; font-weight: bold;">No Reservations Required</p>
+                </div>
+
+                <div class="location-box">
+                    <h3>📍 Find Us</h3>
+                    <div class="contact-info">
+                        <p><strong>Address:</strong><br>19 State St., Gorham, ME 04038</p>
+                        <p><strong>Phone:</strong><br>(207) 839-9744</p>
+                        <p><strong>Services:</strong><br>Dine-in • Takeout • Catering</p>
+                        <p><strong>Parking:</strong><br>Free street parking & private lot<br><em>(Spaces can sometimes be limited)</em></p>
+                    </div>
+                    <div class="image-placeholder" style="height: 200px; margin-top: 1rem;">
+                        📸 Exterior Photo<br>
+                        (Diner exterior & signage)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Guests Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"The Blue Pig Diner has such a warm atmosphere and welcoming vibe. The food is absolutely delicious with generous portions - perfect for sharing or taking home leftovers!"</p>
+                    <p class="testimonial-author">- Local Customer</p>
+                </div>
+
+                <div class="testimonial">
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"This place truly fosters a community experience. The staff is friendly and attentive, and the homemade quality of every dish really shows. Great coffee too!"</p>
+                    <p class="testimonial-author">- Regular Patron</p>
+                </div>
+
+                <div class="testimonial">
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Fast service, reasonable prices, and that cozy diner feel you just can't find anywhere else. The corned beef hash is absolutely mouthwatering!"</p>
+                    <p class="testimonial-author">- Satisfied Diner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🐷 The Blue Pig Diner</h3>
+                    <p>Your home away from home in Gorham, Maine. Serving delicious homemade food with a warm, welcoming atmosphere since day one.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Instagram">📷</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Info</h3>
+                    <p>📍 19 State St., Gorham, ME 04038</p>
+                    <p>📞 (207) 839-9744</p>
+                    <p>🚗 Free parking available</p>
+                    <p>♿ Wheelchair accessible</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p>• Dine-in Experience</p>
+                    <p>• Takeout Available</p>
+                    <p>• Catering Services</p>
+                    <p>• Full Bar</p>
+                    <p>• Kids Menu & High Chairs</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Blue Pig Diner. All rights reserved. | Proudly serving Gorham, Maine</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add some interactivity to menu items
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+        });
+
+        // Add click-to-call functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneNumbers = document.querySelectorAll('a[href^="tel:"]');
+            phoneNumbers.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
